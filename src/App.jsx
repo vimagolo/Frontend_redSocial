@@ -1,14 +1,15 @@
 import { useState } from 'react'
+import { Header } from './components/layout/public/Header'
 
 
 function App() {
 
 
   return (
-    <>
-      <h1>Proyecto red social react</h1>
+    <div className='layout'>
+      <Header/>
         
-    </>
+    </div>
   )
 }
 
