@@ -1,7 +1,12 @@
 import React from 'react'
 import avatar from "../../assets/img/user.png"
+import useAuth from '../../hooks/useAuth'
 
 export const Feed = () => {
+
+
+
+    
     return (
         <>
 
