@@ -5,9 +5,9 @@ import { Global } from '../../../helpers/Global';
 
 export const Sidebar = () => {
 
-    const{auth , setAuth}= useAuth();
+    const{auth , counters}= useAuth();
 
-    console.log(Global.url+"user/avatar/"+auth.image);
+    console.log(counters);
 
     return (
         <aside className="layout__aside">
@@ -22,8 +22,8 @@ export const Sidebar = () => {
 
                     <div className="profile-info__general-info">
                         <div className="general-info__container-avatar">
-                            {auth.image!= "default.png" && <img src={Global.url+"user/avatar/"+auth.image} className="container-avatar__img" alt="Foto de perfil"/>}
-                            {auth.image== "default.png" && <img src={avatar} className="container-avatar__img" alt="Foto de perfil"/>}
+                            {auth.image != "default.png" && <img src={Global.url+"user/avatar/"+auth.image} className="container-avatar__img" alt="Foto de perfil"/>}
+                            {auth.image == "default.png" && <img src={avatar} className="container-avatar__img" alt="Foto de perfil"/>}
                         </div>
 
                         <div className="general-info__container-names">
@@ -37,13 +37,13 @@ export const Sidebar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Siguiendo</span>
-                                <span className="following__number">10</span>
+                                <span className="following__number">{counters.following}</span>
                             </a>
                         </div>
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Seguidores</span>
-                                <span className="following__number">13</span>
+                                <span className="following__number">{counters.followed}</span>
                             </a>
                         </div>
 
@@ -51,7 +51,7 @@ export const Sidebar = () => {
                         <div className="stats__following">
                             <a href="#" className="following__link">
                                 <span className="following__title">Publicaciones</span>
-                                <span className="following__number">17</span>
+                                <span className="following__number">{counters.publications}</span>
                             </a>
                         </div>
 

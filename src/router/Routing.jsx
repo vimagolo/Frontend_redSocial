@@ -4,8 +4,11 @@ import { PublicLayout } from '../components/layout/public/PublicLayout'
 import { PrivateLayout } from '../components/layout/private/PrivateLayout'
 import { Login } from '../components/user/Login'
 import { Register } from '../components/user/Register'
+import { People} from '../components/user/People'
+import { Config} from '../components/user/Config'
 import { Feed } from '../components/publication/feed'
 import { AuthProvider } from '../context/AuthProvider'
+import { LogOut } from '../components/user/LogOut'
 
 
 export const Routing = () => {
@@ -25,6 +28,9 @@ export const Routing = () => {
                 <Route path='/social' element={<PrivateLayout/>}>
                     <Route index element={<Feed/>}/> 
                     <Route path='feed' element={<Feed/>}/> 
+                    <Route path='gente' element={<People/>}/> 
+                    <Route path='ajustes' element={<Config/>}/> 
+                    <Route path='logout' element={<LogOut/>}/> 
                 </Route>
 
                 <Route path='*' element={

@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { useForm } from "../../hooks/useForm";
 import { Global } from '../../helpers/Global';
+import useAuth from '../../hooks/useAuth';
 
 export const Login = () => {
   const { form, changed}= useForm({});
   const [login, setLogin] = useState("not_sended");
+
+  const{setAuth}= useAuth();
 
   const loginUser = async(e) =>{
     //Prevenir actualizacion de la pantalla
@@ -30,6 +33,14 @@ export const Login = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       setLogin("login")
+
+      //Set datos en el auth
+      setAuth(data.user);
+
+      //Redirigir
+      setTimeout(()=>{
+        window.location.reload()
+      },1000)
     } else{
       setLogin("error")
     }

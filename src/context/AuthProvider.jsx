@@ -5,7 +5,10 @@ import { Global } from '../helpers/Global';
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
+
     const [auth, setAuth] = useState({});
+    const [counters, setCounters] = useState({});
+    const [loading, setloading]= useState(true);
 
     useEffect(()=>{
         authUser()
@@ -18,6 +21,7 @@ export const AuthProvider = ({children}) => {
 
         //Comprobar si tene,os el token y el user
         if(!token || !user){
+            setloading(false);
             return false
         }
 
@@ -39,11 +43,27 @@ export const AuthProvider = ({children}) => {
 
         //Setear el estado de auth
         setAuth(data.user)
+        console.log(data.user)
+        console.log("data")
+
+        //Peticion para los contadores
+        const requestCounters = await fetch(Global.url +"user/counters/" +userId,{
+            method:"GET",
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        });
+
+        const dataCounters = await requestCounters.json();
+
+        setCounters(dataCounters);
+        setloading(false)
     }
 
     return (
         <AuthContext.Provider
-        value={{auth,setAuth}}>
+        value={{auth,setAuth,counters,setCounters,loading,setloading}}>
             {children}
         </AuthContext.Provider>
     )
