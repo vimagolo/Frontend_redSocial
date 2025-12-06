@@ -239,8 +239,8 @@ body {
 .post__buttons{
     display: flex;
     align-items: center;
- 
 }
+
 
 .post__button{
     color: var(--color-text-navbar);
@@ -255,6 +255,13 @@ body {
 .post__button:hover{
     background-color: var(--color-background-btn-delete-hover);
     border-color: var(--color-border-btn-delete-hover);
+}
+
+.post__button--green{
+    background-color: var(--color-background-btn-success)
+}
+.post__button--green:hover{
+    background-color: var(--color-background-btn-success-hover)
 }
 
 .content__container-btn{

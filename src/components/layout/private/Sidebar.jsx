@@ -7,7 +7,6 @@ export const Sidebar = () => {
 
     const{auth , counters}= useAuth();
 
-    console.log(counters);
 
     return (
         <aside className="layout__aside">

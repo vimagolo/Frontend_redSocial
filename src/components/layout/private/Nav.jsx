@@ -1,8 +1,12 @@
 import React from "react";
 import avatar from "../../../assets/img/user.png"
 import { NavLink } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth"
+import { Global } from "../../../helpers/Global";
 
 export const Nav = () => {
+    const {auth}= useAuth();
+
     return (
         <nav className="navbar__container-lists">
 
@@ -37,13 +41,14 @@ export const Nav = () => {
 
                 <li className="list-end__item">
                     <a href="#" className="list-end__link-image">
-                        <img src={avatar} className="list-end__img" alt="__"></img>
+                        {auth.image != "default.png" && <img src={Global.url+"user/avatar/"+auth.image} className="list-end__img" alt="Foto de perfil"/>}
+                        {auth.image == "default.png" && <img src={avatar} className="list-end__img" alt="Foto de perfil"/>}
                     </a>
                 </li>
 
                 <li className="list-end__item">
                     <a href="#" className="list-end__link">
-                        <span className="list-end__name">nickname</span>
+                        <span className="list-end__name">{auth.nick}</span>
                     </a>
                 </li>
 
