@@ -43,8 +43,7 @@ export const AuthProvider = ({children}) => {
 
         //Setear el estado de auth
         setAuth(data.user)
-        console.log(data.user)
-        console.log("data")
+
 
         //Peticion para los contadores
         const requestCounters = await fetch(Global.url +"user/counters/" +userId,{

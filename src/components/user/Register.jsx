@@ -25,6 +25,7 @@ export const Register = () => {
     });
 
     const data = await request.json();
+    console.log(data)
 
     if(data.status=="success"){
       setSaved("saved")

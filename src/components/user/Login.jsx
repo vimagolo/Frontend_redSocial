@@ -27,6 +27,8 @@ export const Login = () => {
 
     const data = await request.json();
 
+    console.log(data)
+
     if(data.status=="success"){
       //Persistir los datos en el navegador
       localStorage.setItem("token", data.token);

@@ -2,11 +2,19 @@ import React from 'react'
 import avatar from "../../../assets/img/user.png"
 import useAuth from '../../../hooks/useAuth'
 import { Global } from '../../../helpers/Global';
+import { Link } from 'react-router-dom';
+import { useForm } from '../../../hooks/useForm';
 
 export const Sidebar = () => {
 
     const{auth , counters}= useAuth();
 
+    const{form, changed}= useForm({})
+
+    const savePublication = async(e)=>{
+        e.preventdefault();
+        return false;
+    }
 
     return (
         <aside className="layout__aside">
@@ -34,16 +42,16 @@ export const Sidebar = () => {
                     <div className="profile-info__stats">
 
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={"siguiendo/"+auth._id} className="following__link">
                                 <span className="following__title">Siguiendo</span>
                                 <span className="following__number">{counters.following}</span>
-                            </a>
+                            </Link>
                         </div>
                         <div className="stats__following">
-                            <a href="#" className="following__link">
+                            <Link to={"seguidores/"+auth._id} className="following__link">
                                 <span className="following__title">Seguidores</span>
                                 <span className="following__number">{counters.followed}</span>
-                            </a>
+                            </Link>
                         </div>
 
 
@@ -61,16 +69,16 @@ export const Sidebar = () => {
 
                 <div className="aside__container-form">
 
-                    <form className="container-form__form-post">
+                    <form className="container-form__form-post" onSubmit={savePublication}>
 
                         <div className="form-post__inputs">
-                            <label htmlFor="post" className="form-post__label">¿Que estas pesando hoy?</label>
-                            <textarea name="post" className="form-post__textarea"></textarea>
+                            <label htmlFor="text" className="form-post__label">¿Que estas pesando hoy?</label>
+                            <textarea name="text" className="form-post__textarea" onChange={changed}/>
                         </div>
 
                         <div className="form-post__inputs">
-                            <label htmlFor="image" className="form-post__label">Sube tu foto</label>
-                            <input type="file" name="image" className="form-post__image"/>
+                            <label htmlFor="file" className="form-post__label">Sube tu foto</label>
+                            <input type="file" name="file0" id='file' className="form-post__image"/>
                         </div>
 
                         <input type="submit" value="Enviar" className="form-post__btn-submit" disabled/>

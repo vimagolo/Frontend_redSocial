@@ -10,6 +10,9 @@ import { Feed } from '../components/publication/feed'
 import { AuthProvider } from '../context/AuthProvider'
 import { LogOut } from '../components/user/LogOut'
 
+import { Followers } from '../components/follow/Followers'
+import { Following } from '../components/follow/following'
+
 
 export const Routing = () => {
     return (
@@ -31,6 +34,8 @@ export const Routing = () => {
                     <Route path='gente' element={<People/>}/> 
                     <Route path='ajustes' element={<Config/>}/> 
                     <Route path='logout' element={<LogOut/>}/> 
+                    <Route path='siguiendo/:userId' element={<Following/>}/> 
+                    <Route path='seguidores/:userId' element={<Followers/>}/> 
                 </Route>
 
                 <Route path='*' element={
