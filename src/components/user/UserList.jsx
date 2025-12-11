@@ -2,6 +2,7 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/img/user.png";
 import { Global } from "../../helpers/Global";
+import { Link } from "react-router-dom";
 
 // Componente UserList → recibe las props desde el componente padre (People)
 export const UserList = ({
@@ -86,7 +87,7 @@ export const UserList = ({
 
                             {/* Imagen del usuario */}
                             <div className="post__image-user">
-                                <a href="#" className="post__image-link">
+                                <Link to={"/social/perfil/"+user._id} className="post__image-link">
 
                                     {/* Si el usuario tiene imagen personalizada */}
                                     {user.image != "default.png" && (
@@ -105,7 +106,7 @@ export const UserList = ({
                                             alt="Foto de perfil"
                                         />
                                     )}
-                                </a>
+                                </Link>
                             </div>
 
                             {/* Información del usuario */}
@@ -113,16 +114,16 @@ export const UserList = ({
                                 <div className="post__user-info">
 
                                     {/* Nombre y apellidos */}
-                                    <a href="#" className="user-info__name">
+                                    <Link to={"/social/perfil/"+user._id} className="user-info__name">
                                         {user.name} {user.surname}
-                                    </a>
+                                    </Link>
 
                                     <span className="user-info__divider"> | </span>
 
                                     {/* Fecha de creación */}
-                                    <a href="#" className="user-info__create-date">
+                                    <Link to={"/social/perfil/"+user._id} className="user-info__create-date">
                                         {user.create_at}
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 {/* Texto de ejemplo */}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Global } from '../../helpers/Global';
 import { UserList } from '../user/UserList';
 import { useParams } from 'react-router-dom';
+import{GetProfile} from '../../helpers/GetProfile'
 
 
 export const Followers = () => {
@@ -21,6 +22,9 @@ export const Followers = () => {
     const [following, setFollowing] = useState([]);
 
     const params = useParams()
+
+    
+    const [userProfile, setUserProfile]= useState({});
 
     // -----------------------------------------------------
     //   FUNCIÓN PARA OBTENER USUARIOS CON PAGINACIÓN
@@ -75,13 +79,16 @@ export const Followers = () => {
     // -----------------------------------------------------
     useEffect(() => {
         getUsers(1);  // Cargar la primera página de usuarios
+        GetProfile(params.userId, setUserProfile); 
     }, []);
+
+
 
     return (
         <>
             {/* Encabezado de la sección */}
             <header className="content__header">
-                <h1 className="content__title">Usuarios que sigo Nombre Usuario</h1>
+                <h1 className="content__title">Usuarios que sigo {userProfile.name}</h1>
             </header>
 
             {/* Componente hijo que muestra la lista de usuarios */}

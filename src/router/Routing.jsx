@@ -12,6 +12,7 @@ import { LogOut } from '../components/user/LogOut'
 
 import { Followers } from '../components/follow/Followers'
 import { Following } from '../components/follow/following'
+import { Profile } from '../components/user/Profile'
 
 
 export const Routing = () => {
@@ -36,6 +37,7 @@ export const Routing = () => {
                     <Route path='logout' element={<LogOut/>}/> 
                     <Route path='siguiendo/:userId' element={<Following/>}/> 
                     <Route path='seguidores/:userId' element={<Followers/>}/> 
+                    <Route path='perfil/:userId' element={<Profile/>}/> 
                 </Route>
 
                 <Route path='*' element={
