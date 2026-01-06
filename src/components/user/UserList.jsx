@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/img/user.png";
 import { Global } from "../../helpers/Global";
 import { Link } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
+import { SocialContext } from "../../context/SocialContext";
 
 // Componente UserList → recibe las props desde el componente padre (People)
 export const UserList = ({
@@ -15,6 +17,8 @@ export const UserList = ({
 
     // Extraemos la información del usuario logueado
     const { auth } = useAuth();
+
+    const { dispatch } = useContext(SocialContext);
 
     // -------------------------
     //  FUNCIÓN SEGUIR A USUARIO
@@ -36,6 +40,7 @@ export const UserList = ({
             // Si el backend responde success, agregamos el ID al array de following
             if (data.status === "success") {
                 setFollowing([...following, userId]);
+                dispatch({ type: "FOLLOW" });
             }
         } catch (error) {
             console.log("Error siguiendo usuario", error);
@@ -64,6 +69,7 @@ export const UserList = ({
                     followingUserId => userId !== followingUserId
                 );
                 setFollowing(filteredFollowing);
+                dispatch({ type: "UNFOLLOW" });
             }
 
         } catch (error) {
@@ -122,7 +128,7 @@ export const UserList = ({
 
                                     {/* Fecha de creación */}
                                     <Link to={"/social/perfil/"+user._id} className="user-info__create-date">
-                                        {user.create_at}
+                                        <ReactTimeAgo date={user.create_at} locale="es-Es"></ReactTimeAgo>
                                     </Link>
                                 </div>
 

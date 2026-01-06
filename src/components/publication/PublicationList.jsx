@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext  } from "react";
 import avatar from "../../assets/img/user.png";
 import { Link } from "react-router-dom";
 import { Global } from "../../helpers/Global";
 import useAuth from "../../hooks/useAuth";
+import ReactTimeAgo from "react-time-ago";
+import { SocialContext } from "../../context/SocialContext";
+
 
 export const PublicationList = ({ userId, initialPublications, page: initialPage, totalPages: initialTotalPages, loadMore:loadMore }) => {
     const { auth } = useAuth();
-
+    const { state, dispatch } = useContext(SocialContext);
     const [publications, setPublications] = useState([]);
     const [page, setPage] = useState(initialPage || 1);
     const [totalPages, setTotalPages] = useState(initialTotalPages || 1);
@@ -17,6 +20,8 @@ export const PublicationList = ({ userId, initialPublications, page: initialPage
         setPage(initialPage || 1);
         setTotalPages(initialTotalPages || 1);
     }, [initialPublications, initialPage, initialTotalPages]);
+
+
 
     const deletePublication = async (publicationId) => {
         try {
@@ -29,7 +34,7 @@ export const PublicationList = ({ userId, initialPublications, page: initialPage
             });
             const data = await res.json();
             if (data.status !== "success") return;
-
+            dispatch({ type: "DECREMENT_PUBLICATIONS" });
             await reloadAllPages();
         } catch (error) {
             console.log("Error al borrar publicación", error);
@@ -90,7 +95,7 @@ export const PublicationList = ({ userId, initialPublications, page: initialPage
                                         <div className="post__user-info">
                                             <span className="user-info__name">{pub.user.name} {pub.user.surname}</span>
                                             <span className="user-info__divider"> | </span>
-                                            <span className="user-info__create-date">{pub.user.create_at}</span>
+                                            <span className="user-info__create-date"><ReactTimeAgo date={pub.created_at} locale="es-Es"></ReactTimeAgo></span>
                                         </div>
 
                                         <h4 className="post__content">{pub.text}</h4>

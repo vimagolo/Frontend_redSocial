@@ -6,7 +6,7 @@ import { Login } from '../components/user/Login'
 import { Register } from '../components/user/Register'
 import { People} from '../components/user/People'
 import { Config} from '../components/user/Config'
-import { Feed } from '../components/publication/feed'
+import { Feed } from '../components/publication/Feed'
 import { AuthProvider } from '../context/AuthProvider'
 import { LogOut } from '../components/user/LogOut'
 
@@ -18,9 +18,7 @@ import { Profile } from '../components/user/Profile'
 export const Routing = () => {
     return (
         <BrowserRouter>
-            <AuthProvider>
             <Routes>
-
                 {/* RUTAS PUBLICAS */}
                 <Route path='/' element={<PublicLayout/>}>
                     <Route index element={<Login/>}/> 
@@ -49,9 +47,7 @@ export const Routing = () => {
                         
                     </>
                 }/>
-
             </Routes>
-            </AuthProvider>
         </BrowserRouter>
     )
 }

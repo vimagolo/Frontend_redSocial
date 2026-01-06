@@ -1,54 +1,49 @@
-import React, { createContext, use, useEffect } from 'react';
-import { useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import { Global } from '../helpers/Global';
+import { SocialContext } from './SocialContext'; // Ajusta la ruta según tu proyecto
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({});
-    const [counters, setCounters] = useState({});
-    const [loading, setloading]= useState(true);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
-        authUser()
-    },[]);
+    // Accedemos al dispatch de SocialContext
+    const { dispatch } = useContext(SocialContext);
 
-    const authUser =async()=>{
-        //Sacar datos del usuario identificado del loaclstorage
+    useEffect(() => {
+        authUser();
+    }, []);
+
+    const authUser = async () => {
         const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user")
+        const user = localStorage.getItem("user");
 
-        //Comprobar si tene,os el token y el user
-        if(!token || !user){
-            setloading(false);
-            return false
+        if (!token || !user) {
+            setLoading(false);
+            return;
         }
 
-        //Trasnformar los datos a un onjeto de javascript
         const userObj = JSON.parse(user);
         const userId = userObj.id;
 
-        //Peticion ajax al backend que compuebe el token y
-        //que me devuelva todo los datos del usuario
-        const request = await fetch(Global.url +"user/profile/" +userId,{
-            method:"GET",
-            headers:{
+        // Petición para obtener datos del usuario
+        const request = await fetch(Global.url + "user/profile/" + userId, {
+            method: "GET",
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": token
             }
         });
 
         const data = await request.json();
+        setAuth(data.user);
 
-        //Setear el estado de auth
-        setAuth(data.user)
-
-
-        //Peticion para los contadores
-        const requestCounters = await fetch(Global.url +"user/counters/" +userId,{
-            method:"GET",
-            headers:{
+        // Petición para obtener contadores sociales
+        const requestCounters = await fetch(Global.url + "user/counters/" + userId, {
+            method: "GET",
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": token
             }
@@ -56,13 +51,23 @@ export const AuthProvider = ({children}) => {
 
         const dataCounters = await requestCounters.json();
 
-        setCounters(dataCounters);
-        setloading(false)
+        // Hidratar SocialContext con contadores reales
+        dispatch({
+            type: "SET_COUNTS",
+            payload: {
+                followers: dataCounters.followed,
+                following: dataCounters.following,
+                publications: dataCounters.publications
+            }
+        });
+
+        setLoading(false);
     }
 
     return (
         <AuthContext.Provider
-        value={{auth,setAuth,counters,setCounters,loading,setloading}}>
+            value={{ auth, setAuth, loading, setLoading }}
+        >
             {children}
         </AuthContext.Provider>
     )
